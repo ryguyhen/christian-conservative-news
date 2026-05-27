@@ -1,0 +1,38 @@
+import TopBar from "@/components/TopBar";
+import Masthead from "@/components/Masthead";
+import BreakingTicker from "@/components/BreakingTicker";
+import NewsroomClient from "@/components/NewsroomClient";
+import ScriptureBanner from "@/components/ScriptureBanner";
+import Footer from "@/components/Footer";
+import { getSupabase } from "@/lib/supabase";
+import { SAMPLE_ARTICLES } from "@/lib/sampleArticles";
+import type { Article } from "@/lib/types";
+
+export const revalidate = 3600;
+
+async function getArticles(): Promise<Article[]> {
+  const supabase = getSupabase();
+  if (!supabase) return SAMPLE_ARTICLES;
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .order("published_at", { ascending: false })
+    .limit(50);
+  if (error || !data || data.length === 0) return SAMPLE_ARTICLES;
+  return data as Article[];
+}
+
+export default async function HomePage() {
+  const articles = await getArticles();
+
+  return (
+    <>
+      <TopBar />
+      <Masthead />
+      <BreakingTicker articles={articles} />
+      <NewsroomClient articles={articles} />
+      <ScriptureBanner />
+      <Footer />
+    </>
+  );
+}

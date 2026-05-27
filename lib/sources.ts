@@ -1,0 +1,17 @@
+export const SOURCE_NAMES: string[] = [
+  "The Daily Wire", "The Federalist", "Breitbart", "Washington Examiner",
+  "Townhall", "The Daily Signal", "The Daily Caller", "Newsmax Newsfront",
+  "Newsmax Politics", "One America News (OAN)", "Fox News", "The Epoch Times",
+  "Western Journal", "Real Clear Politics", "Turning Point USA", "TotalNEWS",
+  "CBN News", "The Christian Post", "Christian Concern", "Christian Concern Press",
+  "Andrew Wommack Ministries", "American Cornerstone Inst.", "American Pastors Network",
+  "American Minute", "Mario Murillo", "Million Voices", "Evangelism Explosion",
+  "Crisis Aid International", "LifeWise Academy", "Carson Scholars Fund",
+  "Duane Sheriff", "Lance Wallnau", "Truth & Liberty", "Liberty Sentinel",
+  "Craig Huey", "LifeSiteNews", "LifeNews.com", "Live Action", "Students for Life",
+  "Susan B. Anthony List", "Charlotte Lozier Inst.", "Life Network",
+  "Family Policy Alliance", "Family Research Council", "FRC Washington Update",
+  "Family Renewal", "Them Before Us", "Sex Change Regret", "Barna Research",
+  "Pew Research Center", "Answers in Genesis", "Genesis Apologetics",
+  "Public Discourse Journal", "Witherspoon Institute", "Tricord Global",
+];
