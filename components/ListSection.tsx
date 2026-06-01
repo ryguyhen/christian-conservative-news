@@ -1,49 +1,64 @@
 import type { Article } from "@/lib/types";
-import CategoryBadge from "./CategoryBadge";
+import CategoryKicker from "./CategoryKicker";
+import SourceChip from "./SourceChip";
+import ShareMenu from "./ShareMenu";
 import { timeAgo } from "@/lib/time";
 
 export default function ListSection({ articles }: { articles: Article[] }) {
   if (articles.length === 0) return null;
   return (
-    <section className="mt-12">
-      <div className="flex items-center gap-4 mb-5">
-        <h2 className="font-display font-bold text-2xl text-navy">More Stories</h2>
-        <span className="h-px flex-1 bg-border-tan" />
+    <section className="mt-14">
+      <div className="flex items-end gap-4 mb-5">
+        <h2 className="font-display font-black text-2xl text-ink tracking-tight">
+          More Stories
+        </h2>
+        <span className="h-px flex-1 bg-rule" />
+        <span className="font-label uppercase tracking-[0.18em] text-[11px] text-ink-mute">
+          {articles.length} filed
+        </span>
       </div>
-      <div className="divide-y divide-border-tan">
+
+      <ul className="divide-y divide-rule-soft">
         {articles.map((a) => (
-          <a
-            key={a.id}
-            href={a.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex gap-4 py-4 items-center group"
-          >
-            <div className="w-[88px] h-[60px] shrink-0 bg-parchment overflow-hidden">
-              {a.thumbnail_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={a.thumbnail_url}
-                  alt=""
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              ) : null}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 mb-1">
-                <CategoryBadge category={a.category} />
-                <span className="font-label uppercase tracking-widest text-[11px] text-navy/60">
-                  {a.source} · {timeAgo(a.published_at)}
-                </span>
+          <li key={a.id} className="py-4">
+            <div className="flex gap-4 items-start">
+              <a
+                href={a.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[96px] h-[64px] shrink-0 thumb hidden sm:block"
+              >
+                {a.thumbnail_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={a.thumbnail_url} alt="" loading="lazy" />
+                ) : null}
+              </a>
+              <div className="flex-1 min-w-0">
+                <CategoryKicker category={a.category} />
+                <a
+                  href={a.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block mt-1"
+                >
+                  <h3 className="font-display font-bold text-[18px] leading-snug text-ink edit-link inline line-clamp-2">
+                    {a.title}
+                  </h3>
+                </a>
+                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <SourceChip source={a.source} />
+                  <span className="font-label uppercase tracking-[0.12em] text-[11px] text-ink-mute">
+                    · {timeAgo(a.published_at)}
+                  </span>
+                  <span className="ml-auto">
+                    <ShareMenu url={a.url} title={a.title} />
+                  </span>
+                </div>
               </div>
-              <h3 className="font-display font-bold text-[18px] leading-snug text-navy group-hover:text-red transition-colors line-clamp-2">
-                {a.title}
-              </h3>
             </div>
-          </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

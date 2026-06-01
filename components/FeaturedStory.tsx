@@ -1,46 +1,67 @@
 import type { Article } from "@/lib/types";
-import CategoryBadge from "./CategoryBadge";
+import CategoryKicker from "./CategoryKicker";
+import SourceChip from "./SourceChip";
+import ShareMenu from "./ShareMenu";
+import { shortSource } from "@/lib/sourceMeta";
 import { timeAgo } from "@/lib/time";
 
 export default function FeaturedStory({ article }: { article: Article }) {
   return (
-    <a
-      href={article.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="card grid md:grid-cols-2 gap-0 mb-8 group"
-    >
-      <div className="card-thumb relative aspect-[16/10] md:aspect-auto overflow-hidden bg-parchment">
+    <article className="grid md:grid-cols-[1.15fr_1fr] gap-6 md:gap-10 pb-8 border-b border-rule">
+      <a
+        href={article.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block thumb aspect-[4/3] md:aspect-[5/4] group"
+      >
         {article.thumbnail_url ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={article.thumbnail_url}
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <img src={article.thumbnail_url} alt="" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gold/60 font-display text-4xl italic">
+          <div className="w-full h-full flex items-center justify-center font-display text-3xl italic text-ink-mute">
             Good Godly News
           </div>
         )}
-      </div>
+      </a>
 
-      <div className="p-6 md:p-8 flex flex-col justify-center">
-        <CategoryBadge category={article.category} />
-        <h2 className="card-title font-display font-black text-[28px] md:text-[36px] leading-[1.1] text-navy mt-3">
-          {article.title}
-        </h2>
+      <div className="flex flex-col justify-center">
+        <CategoryKicker category={article.category} reason="TOP STORY" />
+
+        <a
+          href={article.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3"
+        >
+          <h2 className="font-display font-black leading-[1.05] text-ink text-[32px] md:text-[44px] tracking-tight edit-link inline">
+            {article.title}
+          </h2>
+        </a>
+
         {article.summary && (
-          <p className="text-[16px] leading-relaxed text-navy/80 mt-4">
+          <p className="mt-4 text-[17px] md:text-[18px] leading-[1.6] text-ink-soft">
             {article.summary}
           </p>
         )}
-        <div className="mt-6 flex items-center gap-4 text-[12px] font-label uppercase tracking-widest text-navy/70">
-          <span className="bg-parchment px-2 py-1 rounded">{article.source}</span>
-          <span>{timeAgo(article.published_at)}</span>
-          <span className="ml-auto text-red font-bold">Read Full Story →</span>
+
+        <div className="mt-6 pt-4 rule-h flex flex-wrap items-center gap-x-4 gap-y-2">
+          <SourceChip source={article.source} size="md" />
+          <span className="font-label uppercase tracking-[0.14em] text-[11px] text-ink-mute">
+            {timeAgo(article.published_at)}
+          </span>
+          <a
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-label uppercase tracking-[0.18em] text-[11px] font-bold text-accent hover:underline"
+          >
+            Read at {shortSource(article.source)} ↗
+          </a>
+          <span className="ml-auto">
+            <ShareMenu url={article.url} title={article.title} />
+          </span>
         </div>
       </div>
-    </a>
+    </article>
   );
 }

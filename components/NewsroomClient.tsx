@@ -12,60 +12,104 @@ type Filter = "All" | Category;
 
 export default function NewsroomClient({ articles }: { articles: Article[] }) {
   const [filter, setFilter] = useState<Filter>("All");
+  const [source, setSource] = useState<string>("All sources");
 
-  const filtered = useMemo(
-    () => (filter === "All" ? articles : articles.filter((a) => a.category === filter)),
-    [filter, articles]
+  const allSources = useMemo(
+    () => Array.from(new Set(articles.map((a) => a.source))).sort(),
+    [articles]
   );
 
-  const featured = filtered[0];
-  const cards = filtered.slice(1, 10);
-  const list = filtered.slice(10, 25);
+  const filtered = useMemo(() => {
+    return articles.filter((a) => {
+      if (filter !== "All" && a.category !== filter) return false;
+      if (source !== "All sources" && a.source !== source) return false;
+      return true;
+    });
+  }, [filter, source, articles]);
 
   const tabs: Filter[] = ["All", ...CATEGORIES];
 
+  const featured = filtered[0];
+  const mediums = filtered.slice(1, 3);
+  const standards = filtered.slice(3, 9);
+  const list = filtered.slice(9, 24);
+
   return (
     <>
-      <nav className="sticky top-0 z-40 bg-navy-mid border-b-2 border-gold">
-        <div className="max-w-content mx-auto px-6 flex flex-wrap items-center gap-1 overflow-x-auto">
+      <nav className="sticky top-0 z-40 bg-paper border-b-2 border-ink">
+        <div className="max-w-content mx-auto px-6 flex flex-wrap items-stretch gap-x-1 gap-y-0">
           {tabs.map((t) => {
             const active = filter === t;
             return (
               <button
                 key={t}
                 onClick={() => setFilter(t)}
-                className={`px-4 py-3 font-label uppercase tracking-[0.18em] text-[13px] font-bold border-b-2 transition-colors ${
+                className={`px-3 md:px-4 py-3 font-label uppercase tracking-[0.18em] text-[12px] font-bold transition-colors border-b-2 -mb-[2px] ${
                   active
-                    ? "text-gold border-gold"
-                    : "text-cream/80 hover:text-gold border-transparent"
+                    ? "text-accent border-accent"
+                    : "text-ink hover:text-accent border-transparent"
                 }`}
               >
                 {t === "All" ? "All Stories" : t}
               </button>
             );
           })}
-          <span className="ml-auto font-label uppercase text-[11px] tracking-widest text-cream/60 hidden md:inline">
-            {filtered.length} stories
-          </span>
+          <div className="ml-auto self-center py-2 flex items-center gap-2">
+            <label className="font-label uppercase tracking-[0.18em] text-[10px] text-ink-mute hidden md:inline">
+              Source
+            </label>
+            <select
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+              className="bg-paper border border-rule font-label uppercase tracking-[0.12em] text-[11px] text-ink px-2 py-1 max-w-[220px]"
+            >
+              <option>All sources</option>
+              {allSources.map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+            <span className="font-label uppercase tracking-[0.18em] text-[10px] text-ink-mute hidden md:inline">
+              {filtered.length} stories
+            </span>
+          </div>
         </div>
       </nav>
 
-      <div className="max-w-content mx-auto px-6 py-8 grid lg:grid-cols-[1fr_320px] gap-10">
+      <div className="max-w-content mx-auto px-6 py-10 grid lg:grid-cols-[1fr_320px] gap-x-12 gap-y-10">
         <main>
           {featured ? (
             <FeaturedStory article={featured} />
           ) : (
-            <div className="card p-10 text-center text-navy/60 italic">
-              No stories in this category yet — check back soon.
+            <div className="py-12 text-center font-display italic text-ink-mute border border-rule">
+              No stories match this filter.
             </div>
           )}
 
-          {cards.length > 0 && (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {cards.map((a) => (
-                <ArticleCard key={a.id} article={a} />
+          {mediums.length > 0 && (
+            <section className="grid md:grid-cols-2 gap-8 mt-10">
+              {mediums.map((a) => (
+                <ArticleCard key={a.id} article={a} reason="LEAD" size="medium" />
               ))}
-            </div>
+            </section>
+          )}
+
+          {standards.length > 0 && (
+            <section className="mt-12">
+              <div className="flex items-end gap-4 mb-5">
+                <h2 className="font-display font-black text-2xl text-ink tracking-tight">
+                  Today&apos;s Coverage
+                </h2>
+                <span className="h-px flex-1 bg-rule" />
+                <span className="font-label uppercase tracking-[0.18em] text-[11px] text-ink-mute">
+                  {standards.length} stories
+                </span>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+                {standards.map((a) => (
+                  <ArticleCard key={a.id} article={a} />
+                ))}
+              </div>
+            </section>
           )}
 
           <ListSection articles={list} />

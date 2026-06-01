@@ -1,8 +1,7 @@
 import TopBar from "@/components/TopBar";
 import Masthead from "@/components/Masthead";
-import BreakingTicker from "@/components/BreakingTicker";
+import LatestRibbon from "@/components/LatestRibbon";
 import NewsroomClient from "@/components/NewsroomClient";
-import ScriptureBanner from "@/components/ScriptureBanner";
 import Footer from "@/components/Footer";
 import { getSupabase } from "@/lib/supabase";
 import { SAMPLE_ARTICLES } from "@/lib/sampleArticles";
@@ -29,14 +28,14 @@ async function getArticles(): Promise<Article[]> {
 
 export default async function HomePage() {
   const articles = await getArticles();
+  const latest = articles[0]?.published_at;
 
   return (
     <>
-      <TopBar />
+      <TopBar storyCount={articles.length} latestPublishedAt={latest} />
       <Masthead />
-      <BreakingTicker articles={articles} />
+      <LatestRibbon articles={articles} />
       <NewsroomClient articles={articles} />
-      <ScriptureBanner />
       <Footer />
     </>
   );

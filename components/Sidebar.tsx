@@ -1,86 +1,125 @@
 import type { Article } from "@/lib/types";
-import { SOURCE_NAMES } from "@/lib/sources";
 import { timeAgo } from "@/lib/time";
+import { shortSource } from "@/lib/sourceMeta";
+import CategoryKicker from "./CategoryKicker";
 
-function Block({ title, children }: { title: string; children: React.ReactNode }) {
+const VERSES = [
+  { text: "Whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure … think on these things.", ref: "Philippians 4:8" },
+  { text: "Trust in the Lord with all thine heart; and lean not unto thine own understanding.", ref: "Proverbs 3:5" },
+  { text: "Be strong and of a good courage; be not afraid, neither be thou dismayed.", ref: "Joshua 1:9" },
+  { text: "Let your light so shine before men, that they may see your good works.", ref: "Matthew 5:16" },
+  { text: "The fear of the Lord is the beginning of wisdom.", ref: "Proverbs 9:10" },
+];
+
+function SectionHead({ title, kicker }: { title: string; kicker?: string }) {
   return (
-    <section className="border border-border-tan bg-white">
-      <div className="bg-navy px-4 py-2.5">
-        <h3 className="font-label uppercase tracking-[0.2em] text-gold font-bold text-sm">
-          {title}
-        </h3>
-      </div>
-      <div className="p-4">{children}</div>
-    </section>
+    <div className="mb-3">
+      {kicker && (
+        <div className="font-label uppercase tracking-[0.22em] text-[10px] text-ink-mute mb-1">
+          {kicker}
+        </div>
+      )}
+      <h3 className="font-display font-black text-[20px] text-ink tracking-tight border-b border-rule pb-2">
+        {title}
+      </h3>
+    </div>
   );
 }
 
 export default function Sidebar({ articles }: { articles: Article[] }) {
-  const trending = articles.slice(0, 5);
-  const faith = articles.filter((a) => a.category === "Faith").slice(0, 2);
+  const recent = articles.slice(0, 5);
+  const faith = articles.filter((a) => a.category === "Faith").slice(0, 3);
+  const verse = VERSES[new Date().getDate() % VERSES.length];
 
   return (
-    <aside className="space-y-6 sticky top-[60px]">
-      <Block title="Trending Now">
-        <ol className="space-y-3">
-          {trending.map((a, i) => (
+    <aside className="space-y-10 lg:sticky lg:top-[64px] lg:self-start">
+      {/* Most Recent */}
+      <section>
+        <SectionHead title="Most Recent" kicker="Updated continuously" />
+        <ol className="space-y-4">
+          {recent.map((a, i) => (
             <li key={a.id} className="flex gap-3">
-              <span className="font-display font-black text-gold text-2xl leading-none w-6">
-                {i + 1}
+              <span className="font-display font-black text-rule text-[22px] leading-none w-6 pt-1">
+                {String(i + 1).padStart(2, "0")}
               </span>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <a
                   href={a.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-display font-bold text-[15px] leading-snug text-navy hover:text-red line-clamp-3 block"
+                  className="font-display font-bold text-[15px] leading-snug text-ink edit-link inline line-clamp-3"
                 >
                   {a.title}
                 </a>
-                <div className="mt-1 font-label uppercase tracking-widest text-[10px] text-navy/60">
-                  {a.source} · {timeAgo(a.published_at)}
+                <div className="mt-1 font-label uppercase tracking-[0.12em] text-[10px] text-ink-mute">
+                  {shortSource(a.source)} · {timeAgo(a.published_at)}
                 </div>
               </div>
             </li>
           ))}
         </ol>
-      </Block>
+      </section>
 
-      <Block title="Our 56 Active Sources">
-        <div className="flex flex-wrap gap-1.5">
-          {SOURCE_NAMES.map((s) => (
-            <span
-              key={s}
-              className="font-label text-[11px] uppercase tracking-wider bg-parchment text-navy/80 px-2 py-1 rounded"
-            >
-              {s}
-            </span>
-          ))}
+      {/* Verse of the Day */}
+      <section className="bg-paper-warm border border-rule-soft p-5">
+        <div className="font-label uppercase tracking-[0.22em] text-[10px] text-ink-mute mb-2">
+          Verse of the Day
         </div>
-      </Block>
+        <blockquote className="font-display italic text-[16px] leading-[1.5] text-ink">
+          “{verse.text}”
+        </blockquote>
+        <div className="mt-3 font-label uppercase tracking-[0.18em] text-[11px] font-bold text-accent">
+          {verse.ref}
+        </div>
+      </section>
 
-      <Block title="Faith & Prayer">
-        <ul className="space-y-3">
+      {/* More from Faith */}
+      <section>
+        <SectionHead title="More From Faith" />
+        <ul className="space-y-4">
+          {faith.length === 0 && (
+            <li className="text-sm italic text-ink-mute">
+              No faith stories filed in the last cycle.
+            </li>
+          )}
           {faith.map((a) => (
             <li key={a.id}>
+              <CategoryKicker category={a.category} />
               <a
                 href={a.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-display font-bold text-[15px] leading-snug text-navy hover:text-red line-clamp-3 block"
+                className="mt-1 block font-display font-bold text-[15px] leading-snug text-ink edit-link"
               >
                 {a.title}
               </a>
-              <div className="mt-1 font-label uppercase tracking-widest text-[10px] text-navy/60">
-                {a.source} · {timeAgo(a.published_at)}
+              <div className="mt-1 font-label uppercase tracking-[0.12em] text-[10px] text-ink-mute">
+                {shortSource(a.source)} · {timeAgo(a.published_at)}
               </div>
             </li>
           ))}
-          {faith.length === 0 && (
-            <li className="text-sm text-navy/60 italic">Check back soon.</li>
-          )}
         </ul>
-      </Block>
+      </section>
+
+      {/* About the network */}
+      <section className="bg-navy text-paper p-5">
+        <div className="font-label uppercase tracking-[0.22em] text-[10px] text-gold mb-2">
+          About the Network
+        </div>
+        <h3 className="font-display font-bold text-[18px] leading-snug">
+          Headlines from 50+ independent Christian and conservative publishers.
+        </h3>
+        <p className="mt-3 text-[13px] leading-relaxed text-paper/80">
+          We aggregate and link — we do not republish. Every headline takes you
+          to the original publisher.
+        </p>
+        <a
+          href="#footer-sources"
+          className="mt-3 inline-block font-label uppercase tracking-[0.18em] text-[11px] font-bold text-gold hover:underline"
+        >
+          See the full source list →
+        </a>
+      </section>
     </aside>
   );
 }
