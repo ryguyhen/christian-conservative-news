@@ -9,22 +9,22 @@ export default function TopBar({
   latestPublishedAt?: string;
 }) {
   return (
-    <div className="bg-paper border-b border-rule-soft">
-      <div className="max-w-content mx-auto px-6 py-2 flex flex-wrap items-center justify-between gap-2 font-label uppercase tracking-[0.14em] text-[11px] text-ink-soft">
-        <span>{fullDate()}</span>
-        <span className="hidden md:inline">{editionLabel()}</span>
+    <div className="bg-paper-soft border-b border-rule-soft">
+      <div className="max-w-content mx-auto px-6 py-2.5 flex flex-wrap items-center justify-between gap-x-6 gap-y-1 font-label text-[13px] text-ink-soft">
+        <span className="font-semibold">{fullDate()}</span>
+        <span className="hidden md:inline font-semibold">{editionLabel()}</span>
         <span className="flex items-center gap-3">
-          <span>
+          <span className="font-semibold">
             {storyCount} stories
             {latestPublishedAt && (
               <>
-                <span className="mx-2 text-ink-mute">·</span>
+                <span className="mx-2 text-ink-soft/70" aria-hidden>·</span>
                 Updated {timeAgo(latestPublishedAt)}
               </>
             )}
           </span>
-          <span className="text-ink-mute">·</span>
-          <Link href="/about" className="hover:text-accent">
+          <span className="text-ink-soft/70" aria-hidden>·</span>
+          <Link href="/about" className="font-bold text-ink hover:text-accent">
             About
           </Link>
         </span>

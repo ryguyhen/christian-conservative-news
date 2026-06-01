@@ -9,9 +9,9 @@ export default function SourceChip({
 }) {
   const m = monogramFor(source);
   return (
-    <span className={`inline-flex items-center gap-2 ${size === "md" ? "text-[13px]" : "text-[12px]"}`}>
+    <span className={`inline-flex items-center gap-2 ${size === "md" ? "text-[14px]" : "text-[13px]"}`}>
       <span className="monogram" aria-hidden>{m}</span>
-      <span className="font-label uppercase tracking-[0.12em] font-semibold text-ink">
+      <span className="font-label font-bold uppercase tracking-[0.04em] text-ink">
         {shortSource(source)}
       </span>
     </span>

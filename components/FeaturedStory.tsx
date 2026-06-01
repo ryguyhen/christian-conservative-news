@@ -13,12 +13,13 @@ export default function FeaturedStory({ article }: { article: Article }) {
         target="_blank"
         rel="noopener noreferrer"
         className="block thumb aspect-[4/3] md:aspect-[5/4] group"
+        aria-label={`Read at ${article.source}: ${article.title}`}
       >
         {article.thumbnail_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={article.thumbnail_url} alt="" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center font-display text-3xl italic text-ink-mute">
+          <div className="w-full h-full flex items-center justify-center font-display text-3xl italic text-ink-soft">
             Good Godly News
           </div>
         )}
@@ -31,29 +32,29 @@ export default function FeaturedStory({ article }: { article: Article }) {
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3"
+          className="mt-3 block edit-link"
         >
-          <h2 className="font-display font-black leading-[1.05] text-ink text-[32px] md:text-[44px] tracking-tight edit-link inline">
+          <h2 className="font-display font-black leading-[1.08] text-ink text-[34px] md:text-[46px] tracking-tight">
             {article.title}
           </h2>
         </a>
 
         {article.summary && (
-          <p className="mt-4 text-[17px] md:text-[18px] leading-[1.6] text-ink-soft">
+          <p className="mt-4 text-[18px] md:text-[19px] leading-[1.6] text-ink font-normal">
             {article.summary}
           </p>
         )}
 
-        <div className="mt-6 pt-4 rule-h flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="mt-6 pt-4 rule-h flex flex-wrap items-center gap-x-4 gap-y-3">
           <SourceChip source={article.source} size="md" />
-          <span className="font-label uppercase tracking-[0.14em] text-[11px] text-ink-mute">
+          <span className="font-label font-semibold text-[14px] text-ink-soft">
             {timeAgo(article.published_at)}
           </span>
           <a
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-label uppercase tracking-[0.18em] text-[11px] font-bold text-accent hover:underline"
+            className="font-label font-bold text-[14px] text-accent body-link"
           >
             Read at {shortSource(article.source)} ↗
           </a>

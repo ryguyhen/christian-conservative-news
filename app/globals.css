@@ -2,106 +2,215 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Color tokens (WCAG-checked) ──────────────────────────────────────────
+   --paper #f5efe0 (warm ivory)
+   --ink   #14171a (warm near-black)
+   --ink-soft #3a3d43 → 9.5:1 on paper  (was #4a4d52 ~8:1)
+   --navy  #0d1b2a
+   --paper-on-navy-soft #d9d2c0 → 9.1:1 on navy
+   --gold  #d4b25a → 8.6:1 on navy  (was #b08a36 ~6:1)
+   --accent #8b1a1a → 6.5:1 on paper (AA for normal text)
+*/
 :root {
-  --ink: #15171a;
-  --ink-soft: #4a4d52;
-  --ink-mute: #7a7d83;
-  --paper: #f6f1e3;
-  --paper-warm: #ede5d0;
-  --rule: #c9b483;
-  --rule-soft: #d9cba7;
+  --ink: #14171a;
+  --ink-soft: #3a3d43;
+  --paper: #f5efe0;
+  --paper-warm: #ecdfbd;
+  --paper-soft: #fbf6e8;
+  --paper-on-navy: #f5efe0;
+  --paper-on-navy-soft: #d9d2c0;
+  --rule: #b89a4d;
+  --rule-soft: #d4c08a;
   --navy: #0d1b2a;
-  --navy-mid: #152338;
-  --gold: #b08a36;
-  --gold-deep: #8a6a22;
+  --navy-mid: #1b2c44;
+  --gold: #d4b25a;
+  --gold-soft: #f0d98a;
   --accent: #8b1a1a;
-  --accent-soft: #a83232;
+  --focus: #2563eb;
 
+  /* Category accents — kept for kicker text only; each AA-compliant on paper */
   --cat-politics: #8b1a1a;
-  --cat-faith:    #1f5c34;
-  --cat-culture:  #5b3b8a;
-  --cat-world:    #1a4080;
-  --cat-opinion:  #7a5c1e;
+  --cat-faith:    #1a5230;
+  --cat-culture:  #5b3389;
+  --cat-world:    #163a7d;
+  --cat-opinion:  #6e511c;
 }
 
-html, body {
-  background: var(--paper);
-  color: var(--ink);
+/* Honor reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+html { font-size: 100%; }   /* respects user zoom */
 
 body {
   font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 1.0625rem;     /* 17px base, scales with user zoom */
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 .font-display { font-family: var(--font-playfair), Georgia, serif; }
-.font-label   { font-family: var(--font-barlow), "Helvetica Neue", system-ui, sans-serif; }
+.font-serif   { font-family: var(--font-source-serif), Georgia, serif; }
+.font-label   {
+  font-family: var(--font-inter), -apple-system, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
 
-/* ── Editorial kicker ─────────────────────────────────────────────────────── */
-.kicker {
-  font-family: var(--font-barlow), system-ui, sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-size: 11px;
-  line-height: 1;
+/* ── Global focus ring (WCAG 2.4.7) ─────────────────────────────────────── */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus {
+  outline: none;
+}
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Links ──────────────────────────────────────────────────────────────── */
+/* Body inline links: always underlined */
+.body-link, .prose a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--rule);
+}
+.body-link:hover, .body-link:focus-visible,
+.prose a:hover, .prose a:focus-visible {
   color: var(--accent);
-}
-.kicker .kicker-sep {
-  color: var(--ink-mute);
-  margin: 0 0.5em;
-  font-weight: 400;
-}
-.kicker .kicker-tail {
-  color: var(--ink-soft);
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
 }
 
-/* ── Editorial link (underline on hover, no color change) ─────────────────── */
+/* Editorial card-title link: underline on hover/focus, with strong line */
 .edit-link {
   color: var(--ink);
   text-decoration: none;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0 1px;
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  transition: background-size 200ms ease;
 }
-.edit-link:hover { background-size: 100% 1px; }
+.edit-link:hover,
+.edit-link:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--accent);
+}
+a.edit-link:focus-visible { outline-offset: 4px; }
 
-.line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* ── Editorial kicker (≥12px, modest tracking, weight 700) ──────────────── */
+.kicker {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.75rem;        /* 12px */
+  line-height: 1.2;
+  color: var(--accent);
+}
+.kicker .kicker-sep {
+  color: var(--ink-soft);
+  margin: 0 0.45em;
+  font-weight: 600;
+}
+.kicker .kicker-tail { color: var(--ink-soft); }
+
+/* ── Clamps ─────────────────────────────────────────────────────────────── */
 .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-/* ── Hairline rules in newspaper style ────────────────────────────────────── */
-.rule-h     { border-top: 1px solid var(--rule); }
-.rule-h-soft{ border-top: 1px solid var(--rule-soft); }
+/* ── Hairlines ──────────────────────────────────────────────────────────── */
+.rule-h      { border-top: 1px solid var(--rule); }
+.rule-h-soft { border-top: 1px solid var(--rule-soft); }
 .rule-double {
   border-top: 1px solid var(--rule);
   box-shadow: 0 3px 0 -2px var(--rule);
 }
 
-/* ── Source monogram chip ─────────────────────────────────────────────────── */
+/* ── Source monogram chip ───────────────────────────────────────────────── */
 .monogram {
-  width: 22px; height: 22px;
+  width: 26px; height: 26px;
   display: inline-flex; align-items: center; justify-content: center;
   background: var(--paper-warm);
   color: var(--ink);
   font-family: var(--font-playfair), Georgia, serif;
   font-weight: 700;
-  font-size: 12px;
-  border: 1px solid var(--rule-soft);
+  font-size: 14px;
+  border: 1px solid var(--rule);
   letter-spacing: 0;
+  line-height: 1;
 }
 
-/* ── Article thumbnail container ──────────────────────────────────────────── */
-.thumb {
-  background: var(--paper-warm);
-  overflow: hidden;
-}
+/* ── Thumbnails ─────────────────────────────────────────────────────────── */
+.thumb { background: var(--paper-warm); overflow: hidden; }
 .thumb img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 500ms ease;
 }
-.card:hover .thumb img { transform: scale(1.04); }
-
+.card:hover .thumb img,
+.card:focus-within .thumb img { transform: scale(1.04); }
 .card { display: flex; flex-direction: column; }
+
+/* ── Inputs ─────────────────────────────────────────────────────────────── */
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 16px;          /* prevents iOS zoom on focus */
+  line-height: 1.4;
+  color: var(--ink);
+}
+input::placeholder { color: var(--ink-soft); opacity: 0.85; }
+input, select, textarea {
+  min-height: 44px;         /* touch target */
+}
+
+/* ── Buttons (no all-caps gimmick) ──────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  background: var(--navy); color: var(--paper);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;     /* 15px */
+  letter-spacing: 0;
+  min-height: 44px;
+  border: 1px solid var(--navy);
+}
+.btn-primary:hover, .btn-primary:focus-visible { background: var(--ink); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  background: var(--paper); color: var(--ink);
+  padding: 0.7rem 1.1rem;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  min-height: 44px;
+  border: 1px solid var(--rule);
+}
+.btn-secondary:hover, .btn-secondary:focus-visible {
+  background: var(--paper-warm);
+}
+
+.btn-gold {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  background: var(--gold); color: var(--navy);
+  padding: 0.7rem 1.1rem;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  min-height: 44px;
+  border: 1px solid var(--gold);
+}
+.btn-gold:hover, .btn-gold:focus-visible {
+  background: var(--gold-soft);
+}
+
+/* ── Visually-hidden but accessible ─────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}

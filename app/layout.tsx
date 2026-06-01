@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Source_Serif_4, Barlow_Condensed } from "next/font/google";
+import { Playfair_Display, Source_Serif_4, Inter } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["700", "900"],
+  weight: ["700", "800", "900"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
   display: "swap",
@@ -12,15 +12,16 @@ const playfair = Playfair_Display({
 
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  weight: ["300", "400", "600"],
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-source-serif",
   display: "swap",
 });
 
-const barlow = Barlow_Condensed({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
-  variable: "--font-barlow",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${sourceSerif.variable} ${barlow.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${sourceSerif.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );

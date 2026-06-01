@@ -22,13 +22,14 @@ export default function ArticleCard({
         target="_blank"
         rel="noopener noreferrer"
         className="block"
+        aria-label={`Read at ${article.source}: ${article.title}`}
       >
         <div className={`thumb relative ${size === "medium" ? "aspect-[16/10]" : "aspect-[16/9]"}`}>
           {article.thumbnail_url ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={article.thumbnail_url} alt="" loading="lazy" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center font-display text-2xl italic text-ink-mute">
+            <div className="w-full h-full flex items-center justify-center font-display text-2xl italic text-ink-soft">
               Good Godly News
             </div>
           )}
@@ -42,29 +43,29 @@ export default function ArticleCard({
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-2 block"
+          className="mt-2 block edit-link"
         >
           <h3
-            className={`font-display font-bold leading-[1.18] text-ink ${
-              size === "medium" ? "text-[24px]" : "text-[19px]"
-            } line-clamp-3 edit-link inline`}
+            className={`font-serif font-bold leading-[1.25] text-ink ${
+              size === "medium" ? "text-[24px]" : "text-[20px]"
+            } line-clamp-3`}
           >
             {article.title}
-            <span aria-hidden className="text-ink-mute ml-1 align-super text-[11px]">↗</span>
+            <span aria-hidden className="text-ink-soft ml-1 align-baseline text-[14px]">↗</span>
           </h3>
         </a>
 
         {article.summary && (
-          <p className="text-[14.5px] leading-[1.55] text-ink-soft mt-2 line-clamp-3">
+          <p className="text-[16px] leading-[1.55] text-ink-soft mt-3 line-clamp-3 font-normal">
             {article.summary}
           </p>
         )}
 
         <div className="mt-auto pt-3 rule-h-soft flex items-center justify-between gap-3">
-          <div className="min-w-0 flex items-center gap-2">
+          <div className="min-w-0 flex items-center gap-2 flex-wrap">
             <SourceChip source={article.source} />
-            <span className="font-label uppercase tracking-[0.12em] text-[11px] text-ink-mute shrink-0">
-              · {timeAgo(article.published_at)}
+            <span className="font-label font-semibold text-[13px] text-ink-soft shrink-0">
+              <span aria-hidden className="mr-1">·</span>{timeAgo(article.published_at)}
             </span>
           </div>
           <ShareMenu url={article.url} title={article.title} />

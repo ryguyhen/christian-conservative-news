@@ -13,15 +13,15 @@ const VERSES = [
   { text: "The fear of the Lord is the beginning of wisdom.", ref: "Proverbs 9:10" },
 ];
 
-function SectionHead({ title, kicker }: { title: string; kicker?: string }) {
+function SectionHead({ title, kicker, id }: { title: string; kicker?: string; id?: string }) {
   return (
     <div className="mb-3">
       {kicker && (
-        <div className="font-label uppercase tracking-[0.22em] text-[10px] text-ink-mute mb-1">
+        <div className="font-label font-bold uppercase tracking-[0.06em] text-[12px] text-ink-soft mb-1">
           {kicker}
         </div>
       )}
-      <h3 className="font-display font-black text-[20px] text-ink tracking-tight border-b border-rule pb-2">
+      <h3 id={id} className="font-display font-black text-[22px] text-ink tracking-tight border-b border-rule pb-2">
         {title}
       </h3>
     </div>
@@ -37,12 +37,12 @@ export default function Sidebar({ articles }: { articles: Article[] }) {
     <aside className="space-y-10 lg:sticky lg:top-[64px] lg:self-start">
       <MissionCard />
 
-      <section>
-        <SectionHead title="Most Recent" kicker="Updated continuously" />
+      <section aria-labelledby="sidebar-recent">
+        <SectionHead title="Most Recent" kicker="Updated continuously" id="sidebar-recent" />
         <ol className="space-y-4">
           {recent.map((a, i) => (
             <li key={a.id} className="flex gap-3">
-              <span className="font-display font-black text-rule text-[22px] leading-none w-6 pt-1">
+              <span aria-hidden className="font-display font-black text-ink text-[22px] leading-none w-7 pt-1">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="flex-1 min-w-0">
@@ -50,12 +50,12 @@ export default function Sidebar({ articles }: { articles: Article[] }) {
                   href={a.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-display font-bold text-[15px] leading-snug text-ink edit-link inline line-clamp-3"
+                  className="font-serif font-bold text-[16px] leading-snug text-ink edit-link line-clamp-3 block"
                 >
                   {a.title}
                 </a>
-                <div className="mt-1 font-label uppercase tracking-[0.12em] text-[10px] text-ink-mute">
-                  {shortSource(a.source)} · {timeAgo(a.published_at)}
+                <div className="mt-1 font-label font-semibold uppercase tracking-[0.04em] text-[12px] text-ink-soft">
+                  {shortSource(a.source)} <span aria-hidden>·</span> {timeAgo(a.published_at)}
                 </div>
               </div>
             </li>
@@ -65,23 +65,23 @@ export default function Sidebar({ articles }: { articles: Article[] }) {
 
       <NewsletterCapture variant="sidebar" />
 
-      <section className="bg-paper-warm border border-rule-soft p-5">
-        <div className="font-label uppercase tracking-[0.22em] text-[10px] text-ink-mute mb-2">
+      <section className="bg-paper-warm border border-rule p-5" aria-labelledby="sidebar-verse">
+        <div className="font-label font-bold uppercase tracking-[0.06em] text-[12px] text-ink-soft mb-2">
           Verse of the Day
         </div>
-        <blockquote className="font-display italic text-[16px] leading-[1.5] text-ink">
+        <blockquote id="sidebar-verse" className="font-display italic text-[17px] leading-[1.5] text-ink font-bold">
           “{verse.text}”
         </blockquote>
-        <div className="mt-3 font-label uppercase tracking-[0.18em] text-[11px] font-bold text-accent">
+        <div className="mt-3 font-label font-bold uppercase tracking-[0.06em] text-[13px] text-accent">
           {verse.ref}
         </div>
       </section>
 
-      <section>
-        <SectionHead title="More From Faith" />
+      <section aria-labelledby="sidebar-faith">
+        <SectionHead title="More From Faith" id="sidebar-faith" />
         <ul className="space-y-4">
           {faith.length === 0 && (
-            <li className="text-sm italic text-ink-mute">
+            <li className="text-[15px] text-ink-soft">
               No faith stories filed in the last cycle.
             </li>
           )}
@@ -92,12 +92,12 @@ export default function Sidebar({ articles }: { articles: Article[] }) {
                 href={a.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1 block font-display font-bold text-[15px] leading-snug text-ink edit-link"
+                className="mt-2 block font-serif font-bold text-[16px] leading-snug text-ink edit-link"
               >
                 {a.title}
               </a>
-              <div className="mt-1 font-label uppercase tracking-[0.12em] text-[10px] text-ink-mute">
-                {shortSource(a.source)} · {timeAgo(a.published_at)}
+              <div className="mt-1 font-label font-semibold uppercase tracking-[0.04em] text-[12px] text-ink-soft">
+                {shortSource(a.source)} <span aria-hidden>·</span> {timeAgo(a.published_at)}
               </div>
             </li>
           ))}

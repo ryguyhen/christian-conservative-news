@@ -4,30 +4,30 @@ import { shortSource } from "@/lib/sourceMeta";
 
 export default function Footer() {
   return (
-    <footer className="bg-navy text-paper/85 mt-16">
+    <footer className="bg-navy text-paper-on-navy mt-16">
       <div className="max-w-content mx-auto px-6 py-12">
         <div className="grid md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10">
           <div>
-            <div className="font-display font-black text-[28px] text-paper leading-none">
+            <div className="font-display font-black text-[30px] text-paper-on-navy leading-none">
               Good Godly News
             </div>
-            <p className="mt-3 text-[13px] leading-relaxed text-paper/75 max-w-md">
+            <p className="mt-4 text-[15px] leading-[1.6] text-paper-on-navy-soft max-w-md">
               A daily, reader-supported briefing on faith, family, and
               liberty. We do not host original content — every headline
               links to the publisher. Summaries are AI-assisted and reviewed
               for tone. We accept no advertising and run no tracking.
               Reader support is the only thing that makes this possible.
             </p>
-            <p className="mt-4 text-[11px] uppercase tracking-[0.2em] font-label text-gold">
+            <p className="mt-4 text-[13px] font-label font-bold uppercase tracking-[0.06em] text-gold">
               No ads · No trackers · No paywall
             </p>
           </div>
 
           <div>
-            <h4 className="font-label uppercase tracking-[0.22em] text-gold text-[11px] mb-3">
+            <h4 className="font-label font-bold uppercase tracking-[0.06em] text-gold text-[13px] mb-3">
               Sections
             </h4>
-            <ul className="space-y-1.5 text-[14px]">
+            <ul className="space-y-2 text-[15px] text-paper-on-navy">
               <li>Politics</li>
               <li>Faith</li>
               <li>Culture</li>
@@ -37,40 +37,40 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-label uppercase tracking-[0.22em] text-gold text-[11px] mb-3">
+            <h4 className="font-label font-bold uppercase tracking-[0.06em] text-gold text-[13px] mb-3">
               About
             </h4>
-            <ul className="space-y-1.5 text-[14px]">
-              <li><Link href="/about" className="hover:text-paper">Editorial standards</Link></li>
-              <li><Link href="/about#aggregation" className="hover:text-paper">How aggregation works</Link></li>
-              <li><Link href="/about#contact" className="hover:text-paper">Contact</Link></li>
+            <ul className="space-y-2 text-[15px] text-paper-on-navy">
+              <li><Link href="/about" className="hover:underline focus-visible:underline">Editorial standards</Link></li>
+              <li><Link href="/about#aggregation" className="hover:underline focus-visible:underline">How aggregation works</Link></li>
+              <li><Link href="/about#contact" className="hover:underline focus-visible:underline">Contact</Link></li>
               <li>Privacy</li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-label uppercase tracking-[0.22em] text-gold text-[11px] mb-3">
+            <h4 className="font-label font-bold uppercase tracking-[0.06em] text-gold text-[13px] mb-3">
               Support
             </h4>
-            <ul className="space-y-1.5 text-[14px]">
-              <li><Link href="/support" className="text-gold hover:text-paper font-semibold">Become a Supporter</Link></li>
-              <li><Link href="/support#tiers" className="hover:text-paper">Membership tiers</Link></li>
-              <li><Link href="/support#one-time" className="hover:text-paper">Give one time</Link></li>
-              <li><Link href="/support#transparency" className="hover:text-paper">Where the money goes</Link></li>
+            <ul className="space-y-2 text-[15px] text-paper-on-navy">
+              <li><Link href="/support" className="text-gold font-bold hover:text-gold-soft hover:underline focus-visible:underline">Become a Supporter</Link></li>
+              <li><Link href="/support#tiers" className="hover:underline focus-visible:underline">Membership tiers</Link></li>
+              <li><Link href="/support#one-time" className="hover:underline focus-visible:underline">Give one time</Link></li>
+              <li><Link href="/support#transparency" className="hover:underline focus-visible:underline">Where the money goes</Link></li>
             </ul>
           </div>
         </div>
 
         <div id="footer-sources" className="mt-12 pt-8 border-t border-navy-mid">
-          <h4 className="font-label uppercase tracking-[0.22em] text-gold text-[11px] mb-4">
+          <h4 className="font-label font-bold uppercase tracking-[0.06em] text-gold text-[13px] mb-4">
             Curated From · {SOURCE_NAMES.length} Publishers
           </h4>
-          <p className="text-[12px] leading-[1.7] text-paper/70">
+          <p className="text-[14px] leading-[1.7] text-paper-on-navy-soft">
             {SOURCE_NAMES.map((s, i) => (
               <span key={s}>
                 {shortSource(s)}
                 {i < SOURCE_NAMES.length - 1 && (
-                  <span className="text-paper/30 mx-2">·</span>
+                  <span aria-hidden className="text-paper-on-navy-soft/60 mx-2">·</span>
                 )}
               </span>
             ))}
@@ -79,7 +79,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-navy-mid">
-        <div className="max-w-content mx-auto px-6 py-5 text-[11px] font-label uppercase tracking-[0.18em] text-paper/60 flex flex-col md:flex-row gap-2 justify-between">
+        <div className="max-w-content mx-auto px-6 py-5 text-[13px] font-label font-semibold uppercase tracking-[0.06em] text-paper-on-navy-soft flex flex-col md:flex-row gap-2 justify-between">
           <span>© {new Date().getFullYear()} Good Godly News</span>
           <span>Reader-supported · No original reporting · Aggregator</span>
         </div>

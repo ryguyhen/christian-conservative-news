@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 function H2({ children, id }: { children: React.ReactNode; id?: string }) {
   return (
-    <h2 id={id} className="mt-12 mb-4 font-display font-black text-ink text-[28px] md:text-[34px] leading-[1.15] tracking-tight scroll-mt-24">
+    <h2 id={id} className="mt-12 mb-4 font-display font-black text-ink text-[28px] md:text-[34px] leading-[1.18] tracking-tight scroll-mt-24">
       {children}
     </h2>
   );
@@ -19,8 +19,8 @@ function H2({ children, id }: { children: React.ReactNode; id?: string }) {
 export default function AboutPage() {
   return (
     <PageShell>
-      <article className="max-w-3xl mx-auto font-serif text-ink text-[18px] leading-[1.7]">
-        <div className="font-label uppercase tracking-[0.24em] text-[11px] font-bold text-accent">
+      <article className="max-w-3xl mx-auto font-serif text-ink text-[19px] leading-[1.7] prose">
+        <div className="font-label font-bold uppercase tracking-[0.06em] text-[13px] text-accent">
           About this briefing
         </div>
         <h1 className="mt-3 font-display font-black text-ink text-[40px] md:text-[52px] leading-[1.05] tracking-tight">
@@ -61,11 +61,11 @@ export default function AboutPage() {
           referral revenue on those clicks.
         </p>
         <p className="mt-4">
-          See the <Link href="/#footer-sources" className="text-accent edit-link">full source list</Link>.
+          See the <Link href="/#footer-sources" className="body-link">full source list</Link>.
         </p>
 
         <H2>Editorial standards</H2>
-        <ul className="mt-2 space-y-2">
+        <ul className="mt-2 space-y-2 list-none p-0">
           <li>— We summarize; we do not editorialize. Opinion is labeled.</li>
           <li>— We link directly to the publisher; we never frame their content as ours.</li>
           <li>— We correct errors visibly and quickly.</li>
@@ -74,7 +74,7 @@ export default function AboutPage() {
         </ul>
 
         <H2>What we do not do</H2>
-        <ul className="mt-2 space-y-2">
+        <ul className="mt-2 space-y-2 list-none p-0">
           <li>— We do not run display advertising.</li>
           <li>— We do not use third-party tracking pixels.</li>
           <li>— We do not paywall the briefing.</li>
@@ -85,24 +85,19 @@ export default function AboutPage() {
         <p>
           Reader support — recurring memberships and one-time gifts.
           That&apos;s the entire model. See{" "}
-          <Link href="/support" className="text-accent edit-link">
-            Support
-          </Link>{" "}
+          <Link href="/support" className="body-link">Support</Link>{" "}
           for how to join.
         </p>
 
         <H2 id="contact">Contact</H2>
         <p>
           For corrections, tips, or partnership inquiries, write{" "}
-          <span className="font-display italic">editor@goodgodlynews.com</span>
+          <span className="font-display italic font-bold">editor@goodgodlynews.com</span>
           . We read everything.
         </p>
 
         <div className="mt-16 pt-8 border-t border-rule text-center">
-          <Link
-            href="/"
-            className="font-label uppercase tracking-[0.18em] text-[12px] font-bold text-accent hover:underline"
-          >
+          <Link href="/" className="font-label font-bold text-[15px] text-accent body-link">
             ← Back to the briefing
           </Link>
         </div>

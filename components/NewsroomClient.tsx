@@ -39,7 +39,7 @@ export default function NewsroomClient({ articles }: { articles: Article[] }) {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 bg-paper border-b-2 border-ink">
+      <nav className="sticky top-0 z-40 bg-paper border-b-2 border-ink" aria-label="Section filters">
         <div className="max-w-content mx-auto px-6 flex flex-wrap items-stretch gap-x-1 gap-y-0">
           {tabs.map((t) => {
             const active = filter === t;
@@ -47,7 +47,8 @@ export default function NewsroomClient({ articles }: { articles: Article[] }) {
               <button
                 key={t}
                 onClick={() => setFilter(t)}
-                className={`px-3 md:px-4 py-3 font-label uppercase tracking-[0.18em] text-[12px] font-bold transition-colors border-b-2 -mb-[2px] ${
+                aria-pressed={active}
+                className={`px-4 py-3 font-label text-[15px] font-bold transition-colors border-b-[3px] -mb-[2px] ${
                   active
                     ? "text-accent border-accent"
                     : "text-ink hover:text-accent border-transparent"
@@ -58,20 +59,21 @@ export default function NewsroomClient({ articles }: { articles: Article[] }) {
             );
           })}
           <div className="ml-auto self-center py-2 flex items-center gap-2">
-            <label className="font-label uppercase tracking-[0.18em] text-[10px] text-ink-mute hidden md:inline">
+            <label htmlFor="source-filter" className="font-label font-bold text-[14px] text-ink-soft hidden md:inline">
               Source
             </label>
             <select
+              id="source-filter"
               value={source}
               onChange={(e) => setSource(e.target.value)}
-              className="bg-paper border border-rule font-label uppercase tracking-[0.12em] text-[11px] text-ink px-2 py-1 max-w-[220px]"
+              className="bg-paper-soft border border-rule font-label font-semibold text-[15px] text-ink px-3 py-2 max-w-[240px]"
             >
               <option>All sources</option>
               {allSources.map((s) => (
                 <option key={s}>{s}</option>
               ))}
             </select>
-            <span className="font-label uppercase tracking-[0.18em] text-[10px] text-ink-mute hidden md:inline">
+            <span className="font-label font-bold uppercase tracking-[0.04em] text-[12px] text-ink-soft hidden md:inline">
               {filtered.length} stories
             </span>
           </div>
@@ -85,13 +87,13 @@ export default function NewsroomClient({ articles }: { articles: Article[] }) {
           {featured ? (
             <FeaturedStory article={featured} />
           ) : (
-            <div className="py-12 text-center font-display italic text-ink-mute border border-rule">
+            <div className="py-12 text-center font-display italic text-ink-soft border border-rule">
               No stories match this filter.
             </div>
           )}
 
           {mediums.length > 0 && (
-            <section className="grid md:grid-cols-2 gap-8 mt-10">
+            <section className="grid md:grid-cols-2 gap-8 mt-10" aria-label="Lead stories">
               {mediums.map((a) => (
                 <ArticleCard key={a.id} article={a} reason="LEAD" size="medium" />
               ))}
@@ -99,13 +101,13 @@ export default function NewsroomClient({ articles }: { articles: Article[] }) {
           )}
 
           {standards.length > 0 && (
-            <section className="mt-12">
+            <section className="mt-12" aria-labelledby="todays-coverage">
               <div className="flex items-end gap-4 mb-5">
-                <h2 className="font-display font-black text-2xl text-ink tracking-tight">
+                <h2 id="todays-coverage" className="font-display font-black text-[26px] text-ink tracking-tight">
                   Today&apos;s Coverage
                 </h2>
                 <span className="h-px flex-1 bg-rule" />
-                <span className="font-label uppercase tracking-[0.18em] text-[11px] text-ink-mute">
+                <span className="font-label font-bold uppercase tracking-[0.06em] text-[13px] text-ink-soft">
                   {standards.length} stories
                 </span>
               </div>
