@@ -7,6 +7,9 @@ import FeaturedStory from "./FeaturedStory";
 import ArticleCard from "./ArticleCard";
 import ListSection from "./ListSection";
 import Sidebar from "./Sidebar";
+import EditorsBrief from "./EditorsBrief";
+import InlineSupport from "./InlineSupport";
+import NewsletterCapture from "./NewsletterCapture";
 
 type Filter = "All" | Category;
 
@@ -77,6 +80,8 @@ export default function NewsroomClient({ articles }: { articles: Article[] }) {
 
       <div className="max-w-content mx-auto px-6 py-10 grid lg:grid-cols-[1fr_320px] gap-x-12 gap-y-10">
         <main>
+          {filter === "All" && source === "All sources" && <EditorsBrief />}
+
           {featured ? (
             <FeaturedStory article={featured} />
           ) : (
@@ -112,7 +117,11 @@ export default function NewsroomClient({ articles }: { articles: Article[] }) {
             </section>
           )}
 
+          <InlineSupport />
+
           <ListSection articles={list} />
+
+          <NewsletterCapture />
         </main>
 
         <Sidebar articles={articles} />

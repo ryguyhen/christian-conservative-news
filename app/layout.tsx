@@ -25,9 +25,9 @@ const barlow = Barlow_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: "Good Godly News — Christian Conservative News, Curated Daily",
+  title: "Good Godly News — The daily briefing for faith, family & liberty",
   description:
-    "Cut the noise, feed the spirit — positive, encouraging Christian news from 56 trusted sources.",
+    "A reader-supported daily briefing curating the news on faith, family, religious liberty, life, parental rights, and education — from more than fifty trusted publishers. No ads, no trackers, no paywall.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

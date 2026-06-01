@@ -1,3 +1,4 @@
+import SupportStrip from "@/components/SupportStrip";
 import TopBar from "@/components/TopBar";
 import Masthead from "@/components/Masthead";
 import LatestRibbon from "@/components/LatestRibbon";
@@ -32,6 +33,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <SupportStrip />
       <TopBar storyCount={articles.length} latestPublishedAt={latest} />
       <Masthead />
       <LatestRibbon articles={articles} />

@@ -2,6 +2,8 @@ import type { Article } from "@/lib/types";
 import { timeAgo } from "@/lib/time";
 import { shortSource } from "@/lib/sourceMeta";
 import CategoryKicker from "./CategoryKicker";
+import MissionCard from "./MissionCard";
+import NewsletterCapture from "./NewsletterCapture";
 
 const VERSES = [
   { text: "Whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure … think on these things.", ref: "Philippians 4:8" },
@@ -33,7 +35,8 @@ export default function Sidebar({ articles }: { articles: Article[] }) {
 
   return (
     <aside className="space-y-10 lg:sticky lg:top-[64px] lg:self-start">
-      {/* Most Recent */}
+      <MissionCard />
+
       <section>
         <SectionHead title="Most Recent" kicker="Updated continuously" />
         <ol className="space-y-4">
@@ -60,7 +63,8 @@ export default function Sidebar({ articles }: { articles: Article[] }) {
         </ol>
       </section>
 
-      {/* Verse of the Day */}
+      <NewsletterCapture variant="sidebar" />
+
       <section className="bg-paper-warm border border-rule-soft p-5">
         <div className="font-label uppercase tracking-[0.22em] text-[10px] text-ink-mute mb-2">
           Verse of the Day
@@ -73,7 +77,6 @@ export default function Sidebar({ articles }: { articles: Article[] }) {
         </div>
       </section>
 
-      {/* More from Faith */}
       <section>
         <SectionHead title="More From Faith" />
         <ul className="space-y-4">
@@ -99,26 +102,6 @@ export default function Sidebar({ articles }: { articles: Article[] }) {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* About the network */}
-      <section className="bg-navy text-paper p-5">
-        <div className="font-label uppercase tracking-[0.22em] text-[10px] text-gold mb-2">
-          About the Network
-        </div>
-        <h3 className="font-display font-bold text-[18px] leading-snug">
-          Headlines from 50+ independent Christian and conservative publishers.
-        </h3>
-        <p className="mt-3 text-[13px] leading-relaxed text-paper/80">
-          We aggregate and link — we do not republish. Every headline takes you
-          to the original publisher.
-        </p>
-        <a
-          href="#footer-sources"
-          className="mt-3 inline-block font-label uppercase tracking-[0.18em] text-[11px] font-bold text-gold hover:underline"
-        >
-          See the full source list →
-        </a>
       </section>
     </aside>
   );
