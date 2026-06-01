@@ -1,6 +1,6 @@
 import type { Category } from "@/lib/types";
 
-const COLOR: Record<Category, string> = {
+const COLOR: Record<string, string> = {
   Politics: "var(--cat-politics)",
   Faith: "var(--cat-faith)",
   Culture: "var(--cat-culture)",
@@ -15,10 +15,11 @@ export default function CategoryKicker({
   reason = null,
   className = "",
 }: {
-  category: Category;
+  category: Category | string;
   reason?: Reason;
   className?: string;
 }) {
+  const color = COLOR[category] ?? "var(--accent)";
   return (
     <span className={`kicker inline-flex items-baseline ${className}`}>
       {reason && (
@@ -27,7 +28,7 @@ export default function CategoryKicker({
           <span className="kicker-sep">/</span>
         </>
       )}
-      <span style={{ color: COLOR[category] }}>{category}</span>
+      <span style={{ color }}>{category}</span>
     </span>
   );
 }
